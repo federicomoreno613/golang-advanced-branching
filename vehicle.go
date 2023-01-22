@@ -129,14 +129,18 @@ func generateRating() {
 					vehRating += negative
 				case "pathetic", "bad", "worse", "unfortunately", "agitated", "frustrated":
 					vehRating += extraNegative
+
 				}
-			}
-			if vehRating > 8.0 {
-				vehResult.feedbackPositive++
-			} else if vehRating >= 4.0 && vehRating <= 8.0 {
-				vehResult.feedbackNeutral++
-			} else if vehRating < 4.0 {
-				vehResult.feedbackNegative++
+				//Create a switch statement for feedback  Once we have calculated the rating of the feedback, the next step is to categorize as positive, negative, or neutral. Right after and outside the for _, word := range text loop, create a switch statement with no initialization and no condition.  Copy the below case statements, and paste it into the switch statement.
+				switch {
+				case vehRating > 8.0:
+					vehResult.feedbackPositive++
+				case vehRating >= 4.0 && vehRating <= 8.0:
+					vehResult.feedbackNeutral++
+				case vehRating < 4.0:
+					vehResult.feedbackNegative++
+				}
+
 			}
 			//We will add the calculated rating of a particular vehicle model to the vehicleResult map. Right before the closing brace (}) for the first/main for statement for _, v := range f.Models, assign vehResult to vehicleResult[v.Name].
 			vehicleResult[v.Name] = vehResult
