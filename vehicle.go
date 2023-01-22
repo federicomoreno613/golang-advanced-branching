@@ -109,14 +109,17 @@ func generateRating() {
 	f := readJSONFile()
 
 	for _, v := range f.Models {
-		vehresult := feedbackResult{}
-		vehRating := initial
+		//declares variables: Now declare two variables within the for statement: the first one is named vehResult of type feedbackResult, and the second named vehRating of type rating.
+
 		for _, msg := range v.Feedback {
+			var vehresult feedbackResult
+			var vehRating rating
+
 			text := strings.Split(msg, " ")
 			if len(text) >= 5 {
-				vehRating += extraPositive
+				vehRating = initial
+				vehresult.feedbackTotal++
 			}
-			vehresult.feedbackTotal++
 			for _, word := range text {
 				s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")
 				switch s {
