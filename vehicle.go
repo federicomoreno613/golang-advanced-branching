@@ -105,49 +105,52 @@ func readJSONFile() Values {
 }
 
 func generateRating() {
-	// Read the feedback.json file
+	// Call the function `readJSONfile()` and assign it to a variable `f`
 	f := readJSONFile()
 
+	// Check `for _, v := range f.Models`
 	for _, v := range f.Models {
-		//declares variables: Now declare two variables within the for statement: the first one is named vehResult of type feedbackResult, and the second named vehRating of type rating.
-
+		// Declare variables within for stmt vehRating and vehResult
+		var vehRating rating
+		var vehResult feedbackResult
+		// Check `for _, msg := range v.Feedback`
 		for _, msg := range v.Feedback {
-			var vehresult feedbackResult
-			var vehRating rating
 
-			text := strings.Split(msg, " ")
-			if len(text) >= 5 {
-				vehRating = initial
-				vehresult.feedbackTotal++
-			}
-			for _, word := range text {
-				s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")
-				switch s {
-				case "pleasure", "impressed", "wonderful", "fantastic", "splendid":
-					vehRating += extraPositive
-				case "help", "helpful", "thanks", "thank you", "happy":
-					vehRating += positive
-				case "not helpful", "sad", "angry", "improve", "annoy":
-					vehRating += negative
-				case "pathetic", "bad", "worse", "unfortunately", "agitated", "frustrated":
-					vehRating += extraNegative
+			// Check `if text := strings.Split(msg, " ") ; len(text) >= 5`vehRating = 5.0
+			//				vehResult.feedbackTotal++
+			if text := strings.Split(msg, " "); len(text) >= 5 {
+				vehRating = 5.0
+				vehResult.feedbackTotal++
 
+				// Check for `for _, word := range text`
+				for _, word := range text {
+					s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")
+					// Check for `switch s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")`
+					switch s {
+					case "pleasure", "impressed", "wonderful", "fantastic", "splendid":
+						vehRating += extraPositive
+					case "help", "helpful", "thanks", "thank you", "happy":
+						vehRating += positive
+					case "not helpful", "sad", "angry", "improve", "annoy":
+						vehRating += negative
+					case "pathetic", "bad", "worse", "unfortunately", "agitated", "frustrated":
+						vehRating += extraNegative
+					}
 				}
-				//Create a switch statement for feedback  Once we have calculated the rating of the feedback, the next step is to categorize as positive, negative, or neutral. Right after and outside the for _, word := range text loop, create a switch statement with no initialization and no condition.  Copy the below case statements, and paste it into the switch statement.
+				// Check for `switch {case vehRating > 8.0: vehResult.feedbackPositive++...`
 				switch {
 				case vehRating > 8.0:
-					vehresult.feedbackPositive++
+					vehResult.feedbackPositive++
 				case vehRating >= 4.0 && vehRating <= 8.0:
-					vehresult.feedbackNeutral++
+					vehResult.feedbackNeutral++
 				case vehRating < 4.0:
-					vehresult.feedbackNegative++
+					vehResult.feedbackNegative++
 				}
+				// Add the calculated rating to the vehicleResult map.
+				vehicleResult[v.Name] = vehResult
 
 			}
-			//We will add the calculated rating of a particular vehicle model to the vehicleResult map. Right before the closing brace (}) for the first/main for statement for _, v := range f.Models, assign vehResult to vehicleResult[v.Name].
-			vehicleResult[v.Name] = vehresult
 
 		}
-
 	}
 }
