@@ -167,6 +167,7 @@ func generateRating() {
 //The first task of this module is to create a function showRating() with one parameter model of type string, and no return value.
 
 func showRating(model string) {
+	var ratingFound bool
 	ratingFound = false
 	for m, r := range vehicleResult {
 		if m == model {
