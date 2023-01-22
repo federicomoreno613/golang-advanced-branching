@@ -174,10 +174,10 @@ func showRating(model string) {
 			//The second statement will assign the bool value true to the variable ratingFound.
 			ratingFound = true
 		}
-		if !ratingFound {
-			fmt.Println("No rating for this vehicle")
-		}
 
+	}
+	if !ratingFound {
+		fmt.Println("No rating for this vehicle")
 	}
 }
 
