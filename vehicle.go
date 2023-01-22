@@ -121,9 +121,7 @@ func generateRating() {
 				vehResult.feedbackTotal++
 				// Check for `for _, word := range text`
 				for _, word := range text {
-					s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")
-					// Create a switch statement for rating
-					switch s {
+					switch s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r"); s {
 					case "pleasure", "impressed", "wonderful", "fantastic", "splendid":
 						vehRating += extraPositive
 					case "help", "helpful", "thanks", "thank you", "happy":
@@ -134,6 +132,7 @@ func generateRating() {
 						vehRating += extraNegative
 					}
 				}
+
 				// Create a switch statement for feedback
 				switch {
 				case vehRating > 8.0:
