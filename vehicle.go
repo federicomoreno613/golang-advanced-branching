@@ -107,7 +107,6 @@ func readJSONFile() Values {
 func generateRating() {
 	// Call the function `readJSONfile()` and assign it to a variable `f`
 	f := readJSONFile()
-
 	// Check `for _, v := range f.Models`
 	for _, v := range f.Models {
 		// Declare variables within for stmt vehRating and vehResult
@@ -115,17 +114,15 @@ func generateRating() {
 		var vehResult feedbackResult
 		// Check `for _, msg := range v.Feedback`
 		for _, msg := range v.Feedback {
-
 			// Check `if text := strings.Split(msg, " ") ; len(text) >= 5`vehRating = 5.0
 			//				vehResult.feedbackTotal++
 			if text := strings.Split(msg, " "); len(text) >= 5 {
 				vehRating = 5.0
 				vehResult.feedbackTotal++
-
 				// Check for `for _, word := range text`
 				for _, word := range text {
 					s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")
-					// Check for `switch s := strings.Trim(strings.ToLower(word), " ,.,!,?,\t,\n,\r")`
+					// Create a switch statement for rating
 					switch s {
 					case "pleasure", "impressed", "wonderful", "fantastic", "splendid":
 						vehRating += extraPositive
@@ -137,7 +134,7 @@ func generateRating() {
 						vehRating += extraNegative
 					}
 				}
-				// Check for `switch {case vehRating > 8.0: vehResult.feedbackPositive++...`
+				// Create a switch statement for feedback
 				switch {
 				case vehRating > 8.0:
 					vehResult.feedbackPositive++
@@ -146,11 +143,9 @@ func generateRating() {
 				case vehRating < 4.0:
 					vehResult.feedbackNegative++
 				}
-				// Add the calculated rating to the vehicleResult map.
-				vehicleResult[v.Name] = vehResult
-
 			}
-
 		}
+		// Add rating to the vehicle model
+		vehicleResult[v.Name] = vehResult
 	}
 }
